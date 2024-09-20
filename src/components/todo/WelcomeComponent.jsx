@@ -1,26 +1,37 @@
 import { Link, useParams } from 'react-router-dom'
-import axios from 'axios'
+import { useState } from 'react'
+import { retrieveHelloWorldBean, retrieveHelloWorldBeanPathVar } from './api/HelloWorldApiService'
 
 export default function WelcomeComponent(){
+
+    const params = useParams()
+
+    const [message, setMessage] = useState(null)
 
 function callAPI(){
     console.log('called')
     //axios
-    axios.get('http://localhost:8080/hello-world')
-    .then((respnse) => successfulRsp(respnse))
+    //retrieveHelloWorldBean()
+    //.then((respnse) => successfulRsp(respnse))
+    //.catch((error) => unsuccessfulRsp(error))
+    //.finally(() => console.log('cleanup'))
+
+    retrieveHelloWorldBeanPathVar('PeneGrande')
+    .then((response) => successfulRsp(response))
     .catch((error) => unsuccessfulRsp(error))
     .finally(() => console.log('cleanup'))
 }
 
 function successfulRsp(response){
     console.log(response)
+    setMessage(response.data.message)
 }
 
 function unsuccessfulRsp(error){
     console.log(error)
 }
 
-    const params = useParams()
+
     return(
         <div className="Welcome">
             <h1>Welcome {params.username}</h1>
@@ -29,6 +40,9 @@ function unsuccessfulRsp(error){
             </div>
             <div>
                 <button className='btn btn-success m-5' onClick={callAPI}>Call REST API</button>
+            </div>
+            <div className='text-info'>
+                {message}
             </div>
         </div>
     )
