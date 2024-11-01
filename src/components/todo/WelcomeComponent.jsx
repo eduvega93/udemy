@@ -1,12 +1,15 @@
 import { Link, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { retrieveHelloWorldBean, retrieveHelloWorldBeanPathVar } from './api/HelloWorldApiService'
+import { useAuth } from './security/AuthContext'
 
 export default function WelcomeComponent(){
 
     const params = useParams()
 
     const [message, setMessage] = useState(null)
+
+    //const authContext =  useAuth()
 
 function callAPI(){
     console.log('called')

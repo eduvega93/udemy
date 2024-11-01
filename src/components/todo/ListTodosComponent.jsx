@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { deleteTodoApi, retrieveAllTodosForUser } from "./api/TodoApiService";
 import {useAuth} from "./security/AuthContext"
+import { useNavigate } from "react-router-dom";
 
 
 export default function ListTodosComponent() {
@@ -13,6 +14,8 @@ export default function ListTodosComponent() {
     const [todos, setTodos] = useState([])
 
     const [message, setMessage] = useState(null)
+
+    const navigate = useNavigate()
 
     //seleccionar las lineas y luego ctrl k + ctrl c para comentar varias lineas a la vez
     //seleccionar las lineas y luego ctrl k + ctrl u para descomentar varias lineas a la vez
@@ -47,6 +50,15 @@ export default function ListTodosComponent() {
         
     }
 
+    function updateTodo(id){
+        console.log('clicked' + id)
+        navigate((`/todo/${id}`))
+    }
+
+    function addNewTodo(){
+        navigate((`/todo/-1`))
+    }
+
 
 
     return (
@@ -61,6 +73,7 @@ export default function ListTodosComponent() {
                             <th>is Done?</th>
                             <th>Target Date</th>
                             <th>Delete</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,12 +87,18 @@ export default function ListTodosComponent() {
                                         <td><button className="btn btn-warning" 
                                                     onClick={() => deleteTodo(todo.id)}
                                                     >Delete</button></td>
+                                        <td><button className="btn btn-success" 
+                                                    onClick={() => updateTodo(todo.id)}
+                                                    >Update</button></td>
                                     </tr>
                                 )
                             )
                         }
                     </tbody>
                 </table>
+                <div    className="btn btn-success m-3"
+                        onClick={addNewTodo}>
+                            Add New Todo</div>
             </div>
         </div>
     )
