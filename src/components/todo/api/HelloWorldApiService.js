@@ -4,6 +4,3 @@ import { apiCLient } from './ApiClient'
 
     export const retrieveHelloWorldBeanPathVar = (name) => 
         apiCLient.get(`/hello-world/path-variable/${name}`)
-
-    export const executeBasicAuthenticationService = (token) => 
-        apiCLient.get(`/basicauth`)
